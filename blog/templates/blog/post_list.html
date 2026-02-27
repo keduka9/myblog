@@ -9,7 +9,16 @@
 <body>
     <div class="container mt-5">
         <h1 class="md-4">ブログ記事一覧</h1>
-        <a href="{% url 'post_new' %}" class="btn btn-success md-3">新規投稿</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="btn btn-success mb-3">新規投稿</a>
+            <form method="post" action="{% url 'logout' %}" sytle="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary mb-3">ログアウト</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary mb-3">ログイン</a>
+        {% endif %}
+
         {% for post in posts %}
             <div class="card md-3 shadow-sm">
                 <div class="card-body">
